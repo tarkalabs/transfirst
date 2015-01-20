@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = Transfirst::VERSION
   spec.authors       = ["Vagmi Mudumbai"]
   spec.email         = ["vagmi.mudumbai@gmail.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{This gem provides methods for setting up recurring billing with Transfirst}
+  spec.description   = %q{This gem provides methods for setting up recurring billing with Transfirst}
+  spec.homepage      = "https://github.com/JJCOINCWEBDEV/transfirst"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -23,7 +23,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.1.0"
   spec.add_development_dependency "pry", '~> 0.10.1'
   spec.add_development_dependency "equivalent-xml", '~> 0.5.1'
+  spec.add_development_dependency "dotenv", '~> 1.0.2'
 
   spec.add_dependency "savon", "~> 2.8.1"
   spec.add_dependency "nokogiri", "~> 1.6.5"
+  spec.add_dependency "activemodel", "~> 4.2.0"
 end

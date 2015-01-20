@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'pry'
+require 'dotenv'
+Dotenv.load
+$:.unshift(File.expand_path(File.join(__FILE__,'../../lib')))
+require 'transfirst'
+credentials = {gateway_id: ENV['TF_GATEWAY_ID'], registration_key: ENV['TF_REGISTRATION_KEY']}
+api = Transfirst::API.new(credentials)
+puts api.send(:soap_client).inspect
+binding.pry
