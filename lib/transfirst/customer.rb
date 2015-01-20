@@ -5,6 +5,7 @@ class Transfirst::Customer
   include ActiveModel::Model
 
   ADD_CUSTOMER = 0
+  UPDATE_CUSTOMER = 1
   BUSINESS_PHONE = 3
   RECURRING_PAYMENT = 1
   STATUS_ACTIVE = 1
@@ -16,18 +17,28 @@ class Transfirst::Customer
 
   def register
     ensure_api!
-    res=api.make_request(:updt_recurr_prof,'UpdtRecurrProfRequest',self.to_xml)
+    ensure_not_registered!
+    res=api.make_request(:updt_recurr_prof,'UpdtRecurrProfRequest',xml_for_action(ADD_CUSTOMER))
     @tf_id = res[:updt_recurr_prof_response][:cust_id]
     self
   end
 
-  def to_xml
+  def update
+    ensure_api!
+    ensure_registered!
+    res=api.make_request(:updt_recurr_prof,'UpdtRecurrProfRequest',xml_for_action(UPDATE_CUSTOMER))
+    self
+  end
+
+  private
+  def xml_for_action(action)
     xmlns = Transfirst::API::VERSION
     xsd_path = Transfirst::API::XSD_PATH
     builder = Nokogiri::XML::Builder.new do |xml|
       xml[xmlns].cust({"xmlns:#{xmlns}"=>xsd_path}) do
-        xml[xmlns].type ADD_CUSTOMER
+        xml[xmlns].type action
         xml[xmlns].contact do
+          xml[xmlns].id self.tf_id if action==UPDATE_CUSTOMER
           xml[xmlns].fullName self.full_name
           xml[xmlns].phone do
             xml[xmlns].type BUSINESS_PHONE
@@ -47,8 +58,13 @@ class Transfirst::Customer
     end
     builder.to_xml :save_with => Nokogiri::XML::Node::SaveOptions::NO_DECLARATION
   end
-  private
   def ensure_api!
     raise NO_API_ERROR unless @api
+  end
+  def ensure_not_registered!
+    raise "Already Registered" if @tf_id
+  end
+  def ensure_registered!
+    raise "No registration number found" unless @tf_id
   end
 end
