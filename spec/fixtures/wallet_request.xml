@@ -1,0 +1,15 @@
+<v1:cust xmlns:v1="http://postilion/realtime/merchantframework/xsd/v1/">
+    <v1:contact>
+        <v1:id>1315270297974159982</v1:id>
+    </v1:contact>
+    <v1:pmt>
+        <v1:type>0</v1:type>
+        <v1:card>
+            <v1:pan>411111******1111</v1:pan>
+            <v1:xprDt>1612</v1:xprDt>
+        </v1:card>
+        <v1:ordNr>WalletCustRefID</v1:ordNr>
+        <v1:indCode>0</v1:indCode>
+        <v1:status>1</v1:status>
+    </v1:pmt>
+</v1:cust>

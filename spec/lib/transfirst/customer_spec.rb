@@ -18,7 +18,7 @@ RSpec.describe Transfirst::Customer do
     context "registration" do
       it "serializes the customer as a xml object" do
         expected_xml = File.read('spec/fixtures/customer_request.xml')
-        actual_xml = subject.send(:xml_for_action,Transfirst::Customer::ADD_CUSTOMER)
+        actual_xml = subject.send(:xml_for_action,Transfirst::Base::ADD_ENTITY)
         expect(actual_xml).to be_equivalent_to(Nokogiri::XML(expected_xml))
       end
     end
@@ -26,7 +26,7 @@ RSpec.describe Transfirst::Customer do
       it "serializes the customer as a xml object" do
         expected_xml = File.read('spec/fixtures/customer_request_update.xml')
         subject.tf_id="1421783307054197961"
-        actual_xml = subject.send(:xml_for_action,Transfirst::Customer::UPDATE_CUSTOMER)
+        actual_xml = subject.send(:xml_for_action,Transfirst::Base::UPDATE_ENTITY)
         expect(actual_xml).to be_equivalent_to(Nokogiri::XML(expected_xml))
       end
     end
