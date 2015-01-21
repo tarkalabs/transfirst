@@ -31,4 +31,17 @@ w = Transfirst::Wallet.new({
     order_number: '42'
   })
 w.api = api
+w.register
+
+rp = Transfirst::RecurringProfile.new({
+  amount: 1000,
+  start_date: DateTime.now,
+  description: "test recurring profile",
+  purchase_order_number: "1341342342",
+  customer: c,
+  wallet: w
+})
+rp.api = api
+rp.register
+
 binding.pry

@@ -1,0 +1,16 @@
+<v1:recurProf xmlns:v1="http://postilion/realtime/merchantframework/xsd/v1/">
+    <v1:id>1234</v1:id>
+    <v1:type>1</v1:type>
+    <v1:recur>
+        <v1:recurProfStat>1</v1:recurProfStat>
+        <v1:dbtOrCdt>0</v1:dbtOrCdt>
+        <v1:amt>100</v1:amt>
+        <v1:startDt>2015-01-01T00:00:00+00:00</v1:startDt>
+        <v1:blngCyc>30</v1:blngCyc>
+        <v1:desc>desc</v1:desc>
+        <v1:custId>1315270297974159982</v1:custId>
+        <v1:pmtId>1315271377706182291</v1:pmtId>
+        <v1:ordNr>42</v1:ordNr>
+        <v1:purcOrdNr>1234</v1:purcOrdNr>
+    </v1:recur>
+</v1:recurProf>
