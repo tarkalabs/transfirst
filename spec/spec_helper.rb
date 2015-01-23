@@ -1,3 +1,5 @@
+require 'rspec/matchers'
+require 'equivalent-xml'
 $:.unshift(File.expand_path(File.join(__FILE__,'../lib')))
 require 'transfirst'
 

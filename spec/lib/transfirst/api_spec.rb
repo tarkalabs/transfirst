@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'equivalent-xml'
 require 'pry'
 
 RSpec.describe Transfirst::API do

@@ -1,0 +1,14 @@
+<v1:contact xmlns:v1="http://postilion/realtime/merchantframework/xsd/v1/">
+  <v1:fullName>Juan Marichal</v1:fullName>
+  <v1:phone>
+    <v1:type>3</v1:type>
+    <v1:nr>5555555555</v1:nr>
+  </v1:phone>
+  <v1:addrLn1>12202 Airport Way</v1:addrLn1>
+  <v1:addrLn2>Suite 100</v1:addrLn2>
+  <v1:city>Broomfield</v1:city>
+  <v1:state>CO</v1:state>
+  <v1:zipCode>80021</v1:zipCode>
+  <v1:ctry>US</v1:ctry>
+  <v1:email>test@mail.com</v1:email>
+</v1:contact>

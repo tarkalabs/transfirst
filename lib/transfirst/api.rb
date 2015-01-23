@@ -2,6 +2,7 @@ require 'savon'
 
 class Transfirst::API
   VERSION='v1'
+  MERCHANT_WEB_SERVICE = 1
   XSD_PATH="http://postilion/realtime/merchantframework/xsd/v1/"
 
   attr_reader :client, :gateway_id, :registration_key
@@ -11,8 +12,8 @@ class Transfirst::API
     @registration_key = credentials.fetch(:registration_key)
   end
 
-  def make_request(opname,method,to_wrap)
-    body = build_request(method,to_wrap)
+  def make_request(opname,method,*to_wrap)
+    body = build_request(method,*to_wrap)
     begin
       response = soap_client.call(opname,xml: body, soap_action: nil)
       response.body
@@ -32,7 +33,7 @@ class Transfirst::API
     end
   end
 
-  def build_request(method,to_wrap)
+  def build_request(method,*to_wrap)
     namespaces = {
       "xmlns:soapenv" => "http://schemas.xmlsoap.org/soap/envelope/",
       "xmlns:#{VERSION}" => XSD_PATH
@@ -45,9 +46,11 @@ class Transfirst::API
             xml[VERSION].merc do
               xml[VERSION].id gateway_id
               xml[VERSION].regKey registration_key
-              xml[VERSION].inType 1
+              xml[VERSION].inType MERCHANT_WEB_SERVICE
             end
-            xml << to_wrap
+            to_wrap.each do |node|
+              xml << node
+            end
           end
         end
       end
