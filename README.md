@@ -1,5 +1,8 @@
 # Transfirst
 
+[![Circle CI](https://circleci.com/gh/JJCOINCWEBDEV/transfirst.svg?style=svg)](https://circleci.com/gh/JJCOINCWEBDEV/transfirst)
+[![Code Climate](https://codeclimate.com/github/JJCOINCWEBDEV/transfirst/badges/gpa.svg)](https://codeclimate.com/github/JJCOINCWEBDEV/transfirst)
+
 This gem adds subscription billing support using the Transfirst API
 
 ## Installation

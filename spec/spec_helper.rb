@@ -1,5 +1,7 @@
+require "codeclimate-test-reporter"
 require 'rspec/matchers'
 require 'equivalent-xml'
+CodeClimate::TestReporter.start
 $:.unshift(File.expand_path(File.join(__FILE__,'../lib')))
 require 'transfirst'
 
