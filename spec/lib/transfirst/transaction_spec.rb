@@ -41,7 +41,11 @@ RSpec.describe Transfirst::Transaction do
                                                  be_equivalent_to(expected_xmls[2]),
                                                  be_equivalent_to(expected_xmls[3]),
                                                  be_equivalent_to(expected_xmls[4]))
+                                           .and_return({send_tran_response: {rsp_code: "00", tran_data: {tran_nr: '111111'}}})
       subject.perform
+      expect(subject.transaction_id).to eq('111111')
+      expect(subject.transaction_meta).to be
+      expect(subject.status).to eq(:success)
     end
   end
 end

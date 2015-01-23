@@ -27,7 +27,7 @@ class Transfirst::API
     document=wsdl_path
     @client ||= Savon::Client.new do
       ssl_verify_mode :none
-      log true
+      log true if ENV['DEBUG']
       pretty_print_xml true
       wsdl document
     end

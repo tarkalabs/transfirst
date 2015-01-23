@@ -1,9 +1,13 @@
 class Transfirst::Transaction
+
   NO_API_ERROR = "No API object configured"
   AUTH_AND_SETTLE = 1
   ECOMMERCE = 2
+
   include ActiveModel::Model
+
   attr_accessor :api, :customer, :wallet, :amount
+  attr_reader :transaction_id, :transaction_meta, :status
 
   def perform
     raise NO_API_ERROR unless @api
@@ -12,7 +16,13 @@ class Transfirst::Transaction
   end
 
   def process(res)
-    res
+    if(res[:send_tran_response][:rsp_code]!="00")
+      @status=:failed
+      raise Transfirst::TransactionError.new(res)
+    end
+    @transaction_id = res[:send_tran_response][:tran_data][:tran_nr]
+    @transaction_meta = res[:send_tran_response]
+    @status=:success
   end
 
   private

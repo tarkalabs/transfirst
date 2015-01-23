@@ -37,7 +37,7 @@ class Transfirst::TransfirstError < StandardError
     @error_code = e.to_hash[:fault][:detail][:system_fault][:error_code]
     @error_string = CODES[@error_code]
   end
-  
+
   def message
     err_string = "Transfirst Service Error"
     if !error_code.blank? and !error_string.blank?
