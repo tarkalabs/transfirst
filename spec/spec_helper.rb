@@ -1,8 +1,15 @@
-require "codeclimate-test-reporter"
 require 'rspec/matchers'
 require 'equivalent-xml'
 require 'faker'
-CodeClimate::TestReporter.start
+
+if ENV['CODECLIMATE_REPO_TOKEN']
+  require "codeclimate-test-reporter"
+  CodeClimate::TestReporter.start
+else
+  require 'simplecov'
+  SimpleCov.start
+end
+
 $:.unshift(File.expand_path(File.join(__FILE__,'../lib')))
 require 'transfirst'
 

@@ -1,0 +1,46 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:tran="http://transfirst.com"
+  xmlns:erep="http://schemas.datacontract.org/2004/07/eReportsDC"
+  xmlns:erep1="http://schemas.datacontract.org/2004/07/eReportsEnum">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <tran:GetTransactionDetails>
+      <tran:objTransactionDetailsPageRequest>
+        <erep:Credential>
+          <erep:MerchantInfo>
+            <erep:MerchantID><%=gateway_id%></erep:MerchantID>
+            <erep:RegistrationKey><%=registration_key%></erep:RegistrationKey>
+          </erep:MerchantInfo>
+        </erep:Credential>
+        <erep:PageRequest>
+          <erep:PageCount><%= page_number || 1 %></erep:PageCount>
+          <erep:PageSize><%= per_page || 1 %></erep:PageSize>
+        </erep:PageRequest>
+        <erep:TransactionDetailSearchCriteria>
+          <erep:DateType>PostedDate</erep:DateType>
+          <erep:FromDate><%= from_date.iso8601 %></erep:FromDate>
+          <erep:InputSources>
+            <erep1:InputSourceEnum>All</erep1:InputSourceEnum>
+          </erep:InputSources>
+          <erep:MerchantID><%=gateway_id%></erep:MerchantID>
+          <erep:PaymentTypes>
+            <erep1:PaymentTypeEnum>All</erep1:PaymentTypeEnum>
+          </erep:PaymentTypes>
+          <erep:ResponseType>All</erep:ResponseType>
+          <erep:SalesType>All</erep:SalesType>
+          <erep:SortCriteriaTransactionDetail>
+            <erep:AscDescFlag>Ascending</erep:AscDescFlag>
+            <erep:SortColumnNumTransactionDetail>PostedDate</erep:SortColumnNumTransactionDetail>
+          </erep:SortCriteriaTransactionDetail>
+          <erep:ToDate><%= to_date.iso8601 %></erep:ToDate>
+          <erep:TransactionStatusCol>
+            <erep1:TransStatusEnum>All</erep1:TransStatusEnum>
+          </erep:TransactionStatusCol>
+          <erep:TransactionTypeCol>
+            <erep1:TransTypeEnum>All</erep1:TransTypeEnum>
+          </erep:TransactionTypeCol>
+        </erep:TransactionDetailSearchCriteria>
+      </tran:objTransactionDetailsPageRequest>
+    </tran:GetTransactionDetails>
+  </soapenv:Body>
+</soapenv:Envelope>
