@@ -24,13 +24,15 @@ describe "Transaction integration test", type: 'integration' do
     @td_report=Transfirst::Reports::TransactionDetail.new(API_CREDENTIALS)
   end
   it "should post a successful transaction" do
-    @transaction = Transfirst::Transaction.new({customer: @customer,wallet: @wallet, amount: 4200})
+    @transaction = Transfirst::Transaction.new({customer: @customer,wallet: @wallet, amount: 81})
     @transaction.api = @api
     res=@transaction.perform
     expect(@transaction.transaction_id).to be
     expect(@transaction.transaction_meta).to be
     expect(@transaction.status).to eq(:success)
-    results=@td_report.get_transactions(2.days.ago,DateTime.now+6.hours)
+    puts "DONT PANIC!!! - sleeping for 42 seconds for transaction to appear in the reports"
+    sleep 42
+    results=@td_report.get_transactions(2.days.ago,DateTime.now)
     transaction_ids = results.map {|r| r[:tran_nr].to_i}
     expect(transaction_ids).to include(@transaction.transaction_id.to_i)
   end
