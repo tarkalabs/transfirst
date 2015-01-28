@@ -21,6 +21,7 @@ describe "Transaction integration test", type: 'integration' do
       order_number: Faker::Company.ein
     });
     @api = Transfirst::API.new(API_CREDENTIALS)
+    @td_report=Transfirst::Reports::TransactionDetail.new(API_CREDENTIALS)
   end
   it "should post a successful transaction" do
     @transaction = Transfirst::Transaction.new({customer: @customer,wallet: @wallet, amount: 4200})
@@ -29,5 +30,8 @@ describe "Transaction integration test", type: 'integration' do
     expect(@transaction.transaction_id).to be
     expect(@transaction.transaction_meta).to be
     expect(@transaction.status).to eq(:success)
+    results=@td_report.get_transactions(2.days.ago,DateTime.now+6.hours)
+    transaction_ids = results.map {|r| r[:tran_nr].to_i}
+    expect(transaction_ids).to include(@transaction.transaction_id.to_i)
   end
 end

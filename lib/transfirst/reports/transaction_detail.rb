@@ -6,7 +6,7 @@ class Transfirst::Reports::TransactionDetail < Transfirst::Reports::Base
 
   def initialize(attrs)
     @page_number = 1
-    @per_page = 1
+    @per_page = 100
     super
   end
 
@@ -31,7 +31,8 @@ class Transfirst::Reports::TransactionDetail < Transfirst::Reports::Base
     @template||=ERB.new(template)
   end
   def query_api
-    result=make_request(:get_transaction_details,SOAP_ACTION,template.result(get_template_context))
+    request_body=template.result(get_template_context)
+    result=make_request(:get_transaction_details,SOAP_ACTION,request_body)
     result[:get_transaction_details_response][:get_transaction_details_result]
   end
   def get_template_context

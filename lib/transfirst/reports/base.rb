@@ -19,6 +19,8 @@ class Transfirst::Reports::Base
     @registration_key = credentials.fetch(:registration_key)
   end
 
+  private
+
   def soap_client
     document=wsdl_path
     @client ||= Savon::Client.new do
@@ -33,8 +35,6 @@ class Transfirst::Reports::Base
     response = soap_client.call(op_name,soap_action: soap_action, xml: to_wrap)
     response.body
   end
-
-  private
 
   def wsdl_path
     File.expand_path(File.join(__FILE__,'../../../wsdl/reports.wsdl'))
