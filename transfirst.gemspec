@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "codeclimate-test-reporter", '~> 0.4.6'
   spec.add_development_dependency "faker", '~> 1.4.3'
 
-  spec.add_dependency "savon", "~> 2.8.1"
+  spec.add_dependency "savon", "~> 2.7.2"
   spec.add_dependency "nokogiri", "~> 1.6.5"
   spec.add_dependency "activemodel", "~> 4.2.0"
 end

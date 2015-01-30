@@ -4,7 +4,6 @@ describe "Transaction integration test", type: 'integration' do
   before do
     @customer = Transfirst::Customer.new({
       full_name: Faker::Name.name,
-      # Ugliness due to an overly concerned validator
       phone_number: Faker::PhoneNumber.cell_phone,
       address_line1: Faker::Address.street_address,
       address_line2: Faker::Address.secondary_address,
