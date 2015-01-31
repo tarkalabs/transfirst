@@ -60,9 +60,11 @@ class Transfirst::Transaction
     Nokogiri::XML::Builder.new do |xml|
       xml[xmlns].contact({"xmlns:#{xmlns}"=>xsd_path}) do
         xml[xmlns].fullName customer.full_name
-        xml[xmlns].phone do
-          xml[xmlns].type Transfirst::Customer::BUSINESS_PHONE
-          xml[xmlns].nr customer.phone_number
+        if customer.phone_number
+          xml[xmlns].phone do
+            xml[xmlns].type Transfirst::Customer::BUSINESS_PHONE
+            xml[xmlns].nr customer.phone_number
+          end
         end
         xml[xmlns].addrLn1 customer.address_line1
         xml[xmlns].addrLn2 customer.address_line2

@@ -16,9 +16,11 @@ class Transfirst::Customer < Transfirst::Base
         xml[xmlns].contact do
           xml[xmlns].id self.tf_id if action==UPDATE_ENTITY
           xml[xmlns].fullName self.full_name
-          xml[xmlns].phone do
-            xml[xmlns].type BUSINESS_PHONE
-            xml[xmlns].nr self.phone_number
+          if self.phone_number
+            xml[xmlns].phone do
+              xml[xmlns].type BUSINESS_PHONE
+              xml[xmlns].nr self.phone_number
+            end
           end
           xml[xmlns].addrLn1 self.address_line1
           xml[xmlns].addrLn2 self.address_line2
