@@ -5,7 +5,7 @@
         <v1:dbtOrCdt>0</v1:dbtOrCdt>
         <v1:amt>100</v1:amt>
         <v1:startDt>2015-01-01T00:00:00+00:00</v1:startDt>
-        <v1:blngCyc>30</v1:blngCyc>
+        <v1:blngCyc>51</v1:blngCyc>
         <v1:desc>desc</v1:desc>
         <v1:custId>1315270297974159982</v1:custId>
         <v1:pmtId>1315271377706182291</v1:pmtId>

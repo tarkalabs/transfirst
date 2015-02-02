@@ -31,28 +31,19 @@ class Transfirst::Reports::TransactionDetail < Transfirst::Reports::Base
     @template||=ERB.new(template)
   end
   def query_api
-    request_body=template.result(get_template_context)
+    request_body=template.result(binding)
     result=make_request(:get_transaction_details,SOAP_ACTION,request_body)
     result[:get_transaction_details_response][:get_transaction_details_result]
   end
-  def get_template_context
-    context = Object.new
-    class << context
-      def get_binding
-        binding
-      end
-    end
-    b=context.get_binding
-    %w(from_date to_date page_number per_page gateway_id registration_key).each do |v|
-      b.local_variable_set(v,instance_variable_get("@#{v}"))
-    end
-    b
-  end
   def arrayify(result)
-    records=result[:data_record_transaction_details][:data_record_transaction_detail]
-    return [] if records.blank?
-    return records if records.is_a?(Array)
-    [records] if records.is_a?(Hash)
+    if(result[:data_record_transaction_details] and result[:data_record_transaction_details][:data_record_transaction_detail])
+      records=result[:data_record_transaction_details][:data_record_transaction_detail]
+      return [] if records.blank?
+      return records if records.is_a?(Array)
+      [records] if records.is_a?(Hash)
+    else
+      puts result.inspect
+      raise "Unable to read response"
+    end
   end
-
 end

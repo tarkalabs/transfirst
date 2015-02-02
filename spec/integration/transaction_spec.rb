@@ -20,19 +20,51 @@ describe "Transaction integration test", type: 'integration' do
       order_number: Faker::Company.ein
     });
     @api = Transfirst::API.new(API_CREDENTIALS)
-    @td_report=Transfirst::Reports::TransactionDetail.new(API_CREDENTIALS)
   end
-  it "should post a successful transaction" do
-    @transaction = Transfirst::Transaction.new({customer: @customer,wallet: @wallet, amount: 81})
-    @transaction.api = @api
-    res=@transaction.perform
-    expect(@transaction.transaction_id).to be
-    expect(@transaction.transaction_meta).to be
-    expect(@transaction.status).to eq(:success)
-    puts "DONT PANIC!!! - sleeping for 42 seconds for transaction to appear in the reports"
-    sleep 42
-    results=@td_report.get_transactions(2.days.ago,DateTime.now)
-    transaction_ids = results.map {|r| r[:tran_nr].to_i}
-    expect(transaction_ids).to include(@transaction.transaction_id.to_i)
+  describe "Transaction Report", type: "slow" do
+    it "should post a successful transaction" do
+      @transaction = Transfirst::Transaction.new({customer: @customer,wallet: @wallet, amount: 81})
+      @transaction.api = @api
+      @transaction.perform
+      transaction_ids=[]
+      3.times do
+        puts "waiting for transaction to appear in reports ..."
+        sleep 30
+        @td_report=Transfirst::Reports::TransactionDetail.new(API_CREDENTIALS)
+        results=@td_report.get_transactions(2.days.ago,DateTime.now)
+        transaction_ids = results.map {|r| r[:tran_nr].to_i}
+        break if transaction_ids.include? @transaction.transaction_id.to_i
+      end
+      expect(transaction_ids).to include(@transaction.transaction_id.to_i)
+    end
+  end
+  describe "recurring profile" do
+    before do
+      @customer.api = @api
+      @wallet.api = @api
+      @customer.register
+      @wallet.register
+    end
+    it "should create a transaction" do
+      transaction = Transfirst::Transaction.new({customer: @customer,wallet: @wallet, amount: 50})
+      transaction.api = @api
+      transaction.perform
+      expect(transaction.transaction_id).to be
+      expect(transaction.transaction_meta).to be
+      expect(transaction.status).to eq(:success)
+    end
+    it "should create a recurring profile" do
+      rp = Transfirst::RecurringProfile.new({
+        amount: 699,
+        start_date: DateTime.now,
+        description: "test recurring profile",
+        purchase_order_number: "1341342342",
+        customer: @customer,
+        wallet: @wallet
+      })
+      rp.api=@api
+      rp.register
+      expect(rp.tf_id).to be
+    end
   end
 end

@@ -8,21 +8,21 @@
       <tran:objTransactionDetailsPageRequest>
         <erep:Credential>
           <erep:MerchantInfo>
-            <erep:MerchantID><%=gateway_id%></erep:MerchantID>
-            <erep:RegistrationKey><%=registration_key%></erep:RegistrationKey>
+            <erep:MerchantID><%=@gateway_id%></erep:MerchantID>
+            <erep:RegistrationKey><%=@registration_key%></erep:RegistrationKey>
           </erep:MerchantInfo>
         </erep:Credential>
         <erep:PageRequest>
-          <erep:PageCount><%= page_number || 1 %></erep:PageCount>
-          <erep:PageSize><%= per_page || 100 %></erep:PageSize>
+          <erep:PageCount><%= @page_number || 1 %></erep:PageCount>
+          <erep:PageSize><%= @per_page || 100 %></erep:PageSize>
         </erep:PageRequest>
         <erep:TransactionDetailSearchCriteria>
           <erep:DateType>PostedDate</erep:DateType>
-          <erep:FromDate><%= from_date.iso8601 %></erep:FromDate>
+          <erep:FromDate><%= @from_date.iso8601 %></erep:FromDate>
           <erep:InputSources>
             <erep1:InputSourceEnum>All</erep1:InputSourceEnum>
           </erep:InputSources>
-          <erep:MerchantID><%=gateway_id%></erep:MerchantID>
+          <erep:MerchantID><%=@gateway_id%></erep:MerchantID>
           <erep:PaymentTypes>
             <erep1:PaymentTypeEnum>All</erep1:PaymentTypeEnum>
           </erep:PaymentTypes>
@@ -32,7 +32,7 @@
             <erep:AscDescFlag>Descending</erep:AscDescFlag>
             <erep:SortColumnNumTransactionDetail>PostedDate</erep:SortColumnNumTransactionDetail>
           </erep:SortCriteriaTransactionDetail>
-          <erep:ToDate><%= to_date.iso8601 %></erep:ToDate>
+          <erep:ToDate><%= @to_date.iso8601 %></erep:ToDate>
           <erep:TransactionStatusCol>
             <erep1:TransStatusEnum>All</erep1:TransStatusEnum>
           </erep:TransactionStatusCol>

@@ -2,7 +2,7 @@ class Transfirst::RecurringProfile < Transfirst::Base
 
   DIRECT_MARKETING = 0
   DEBIT = 0
-  MONTHLY = 30
+  AT_A_DATE = 51
 
   attr_accessor :amount, :start_date, :description, :purchase_order_number,
                 :customer, :wallet, :api, :tf_id
@@ -23,7 +23,7 @@ class Transfirst::RecurringProfile < Transfirst::Base
           xml[xmlns].dbtOrCdt DEBIT # apparently the only valid value as per doc
           xml[xmlns].amt self.amount # should probably be in cents
           xml[xmlns].startDt self.start_date.iso8601
-          xml[xmlns].blngCyc MONTHLY
+          xml[xmlns].blngCyc AT_A_DATE
           xml[xmlns].desc self.description
           xml[xmlns].custId self.customer.tf_id
           xml[xmlns].pmtId self.wallet.tf_id

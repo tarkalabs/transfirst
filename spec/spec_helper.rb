@@ -1,6 +1,7 @@
 require 'rspec/matchers'
 require 'equivalent-xml'
 require 'faker'
+require 'pry'
 
 if ENV['CODECLIMATE_REPO_TOKEN']
   require "codeclimate-test-reporter"
