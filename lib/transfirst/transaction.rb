@@ -51,6 +51,7 @@ class Transfirst::Transaction
     Nokogiri::XML::Builder.new do |xml|
       xml[xmlns].card({"xmlns:#{xmlns}"=>xsd_path}) do
         xml[xmlns].pan wallet.card_number
+        xml[xmlns].sec wallet.cvv if wallet.cvv
         xml[xmlns].xprDt wallet.expiry
       end
     end

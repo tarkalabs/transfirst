@@ -16,6 +16,7 @@ describe "Transaction integration test", type: 'integration' do
     @wallet = Transfirst::Wallet.new({
       customer: @customer,
       card_number: VALID_CARDS.sample,
+      cvv: 123,
       expiry: Faker::Date.forward(1000).strftime("%y%m"),
       order_number: Faker::Company.ein
     });

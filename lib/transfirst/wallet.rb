@@ -2,7 +2,7 @@ class Transfirst::Wallet < Transfirst::Base
 
   DIRECT_MARKETING = 0
 
-  attr_accessor :customer, :card_number, :expiry, :order_number, :api, :tf_id
+  attr_accessor :customer, :card_number, :cvv, :expiry, :order_number, :api, :tf_id
   response_key :pmt_id
 
   private

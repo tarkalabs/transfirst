@@ -7,41 +7,5 @@ $:.unshift(File.expand_path(File.join(__FILE__,'../../lib')))
 require 'transfirst'
 credentials = {gateway_id: ENV['TF_GATEWAY_ID'], registration_key: ENV['TF_REGISTRATION_KEY']}
 api = Transfirst::API.new(credentials)
-puts api.send(:soap_client).inspect
-
-c = Transfirst::Customer.new({
-      full_name: "Juan Marichal",
-      phone_number: 5555555555,
-      address_line1: "12202 Airport Way",
-      address_line2: "Suite 100",
-      city: "Broomfield",
-      state: "CO",
-      zip_code: "80021",
-      country: "US",
-      email: "test@mail.com",
-    })
-
-c.api = api
-c.register
-
-w = Transfirst::Wallet.new({
-    customer: c,
-    card_number: '4485896261017708',
-    expiry: '1601',
-    order_number: '42'
-  })
-w.api = api
-w.register
-
-rp = Transfirst::RecurringProfile.new({
-  amount: 1000,
-  start_date: DateTime.now,
-  description: "test recurring profile",
-  purchase_order_number: "1341342342",
-  customer: c,
-  wallet: w
-})
-rp.api = api
-rp.register
 
 binding.pry

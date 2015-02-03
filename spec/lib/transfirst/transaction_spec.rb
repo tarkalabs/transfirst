@@ -19,6 +19,7 @@ RSpec.describe Transfirst::Transaction do
         wallet: Transfirst::Wallet.new({
           customer: customer,
           card_number: "411111******1111",
+          cvv: 123,
           expiry: '1612',
           order_number: 'WalletCustRefID'
         }),
