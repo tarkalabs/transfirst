@@ -6,7 +6,6 @@ RSpec.describe Transfirst::RecurringProfile do
       amount: 100,
       start_date: DateTime.new(2015,1,1),
       description: "desc",
-      purchase_order_number: 1234,
       customer: Transfirst::Customer.new({tf_id: 1315270297974159982}),
       wallet: Transfirst::Wallet.new({
         tf_id: 1315271377706182291,
