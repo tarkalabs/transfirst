@@ -28,7 +28,6 @@ class Transfirst::RecurringProfile < Transfirst::Base
           xml[xmlns].custId self.customer.tf_id
           xml[xmlns].pmtId self.wallet.tf_id
           xml[xmlns].ordNr self.wallet.order_number
-          xml[xmlns].purcOrdNr self.purchase_order_number
         end
       end
     end

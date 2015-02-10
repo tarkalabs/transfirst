@@ -59,7 +59,6 @@ describe "Transaction integration test", type: 'integration' do
         amount: 699,
         start_date: DateTime.now,
         description: "test recurring profile",
-        purchase_order_number: "1341342342",
         customer: @customer,
         wallet: @wallet
       })
