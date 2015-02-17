@@ -95,12 +95,50 @@ RSpec.describe Transfirst::Customer do
                           :rsp_code=>"00",
                           :@xmlns=>"http://postilion/realtime/portal/soa/xsd/Faults/2009/01",
                           :"@xmlns:ns2"=>"http://postilion/realtime/merchantframework/xsd/v1/"}}
-        expect(api).to receive(:make_request).with(:updt_recurr_prof,'UpdtRecurrProfRequest', 
+        expect(api).to receive(:make_request).with(:updt_recurr_prof,'UpdtRecurrProfRequest',
                                                    be_equivalent_to(customer_xml))
           .and_return(mock_response)
         subject.api=api
         subject.tf_id="1421783307054197961"
         return_obj=subject.update
+        expect(return_obj).to eq(subject)
+        expect(return_obj.tf_id).to eq("1421783307054197961")
+      end
+    end
+  end
+
+  describe "#cancel" do
+
+    context "api is not set" do
+      it "expects error if the api object is not set" do
+        expect { subject.register }.to raise_error(Transfirst::Customer::NO_API_ERROR)
+      end
+    end
+
+    context "tf_id is not set" do
+      it "expects error when trying to register" do
+        api = double(:api)
+        subject.api=api
+        expect { subject.cancel }.to raise_error('No registration number found')
+      end
+    end
+
+    context "api is set" do
+      it "should call build request on api" do
+        customer_xml = File.read('spec/fixtures/customer_request_cancel.xml')
+
+        api = double(:api)
+        mock_response = {:updt_recurr_prof_response=>
+                         {:cust_id=>"1421783307054197961",
+                          :rsp_code=>"00",
+                          :@xmlns=>"http://postilion/realtime/portal/soa/xsd/Faults/2009/01",
+                          :"@xmlns:ns2"=>"http://postilion/realtime/merchantframework/xsd/v1/"}}
+        expect(api).to receive(:make_request).with(:updt_recurr_prof,'UpdtRecurrProfRequest',
+                                                   be_equivalent_to(customer_xml))
+          .and_return(mock_response)
+        subject.api=api
+        subject.tf_id="1421783307054197961"
+        return_obj=subject.cancel
         expect(return_obj).to eq(subject)
         expect(return_obj.tf_id).to eq("1421783307054197961")
       end

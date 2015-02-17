@@ -30,11 +30,13 @@ class Transfirst::Reports::TransactionDetail < Transfirst::Reports::Base
     template = File.read(File.expand_path(File.join(__FILE__,'../templates/transaction_detail.xml.erb')))
     @template||=ERB.new(template)
   end
+
   def query_api
     request_body=template.result(binding)
     result=make_request(:get_transaction_details,SOAP_ACTION,request_body)
     result[:get_transaction_details_response][:get_transaction_details_result]
   end
+
   def arrayify(result)
     if(result[:data_record_transaction_details] and result[:data_record_transaction_details][:data_record_transaction_detail])
       records=result[:data_record_transaction_details][:data_record_transaction_detail]

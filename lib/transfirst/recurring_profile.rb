@@ -11,15 +11,20 @@ class Transfirst::RecurringProfile < Transfirst::Base
 
   private
 
-  def xml_for_action(action)
+  def xml_for_action(action, status = STATUS_ACTIVE)
     xmlns = Transfirst::API::VERSION
     xsd_path = Transfirst::API::XSD_PATH
     builder = Nokogiri::XML::Builder.new do |xml|
       xml[xmlns].recurProf({"xmlns:#{xmlns}"=>xsd_path}) do
-        xml[xmlns].id self.tf_id if action==UPDATE_ENTITY
+
+        if action == UPDATE_ENTITY
+          xml[xmlns].id self.tf_id
+        end
+
         xml[xmlns].type action
         xml[xmlns].recur do
-          xml[xmlns].recurProfStat STATUS_ACTIVE
+
+          xml[xmlns].recurProfStat status
           xml[xmlns].dbtOrCdt DEBIT # apparently the only valid value as per doc
           xml[xmlns].amt self.amount # should probably be in cents
           xml[xmlns].startDt self.start_date.iso8601

@@ -13,6 +13,6 @@
     <v1:ctry>US</v1:ctry>
     <v1:email>test@mail.com</v1:email>
     <v1:type>1</v1:type>
-    <v1:stat>1</v1:stat>
+    <v1:stat>0</v1:stat>
   </v1:contact>
 </v1:cust>

@@ -7,7 +7,7 @@ class Transfirst::Wallet < Transfirst::Base
 
   private
 
-  def xml_for_action(action)
+  def xml_for_action(action, status = STATUS_ACTIVE)
     xmlns = Transfirst::API::VERSION
     xsd_path = Transfirst::API::XSD_PATH
     builder = Nokogiri::XML::Builder.new do |xml|
@@ -16,16 +16,22 @@ class Transfirst::Wallet < Transfirst::Base
           xml[xmlns].id customer.tf_id
         end
         xml[xmlns].pmt do
-          xml[xmlns].id self.tf_id if action==UPDATE_ENTITY
+
+          if action==UPDATE_ENTITY
+            xml[xmlns].id self.tf_id
+          end
+
           xml[xmlns].type action
           xml[xmlns].card do
-            # xml[xmlns].type NEEDS CLARIFICATION
+
+            # xml[xmlns].type TODO: NEEDS WHAT CLARIFICATION?
+
             xml[xmlns].pan self.card_number
             xml[xmlns].xprDt self.expiry
           end
           xml[xmlns].ordNr self.order_number
           xml[xmlns].indCode DIRECT_MARKETING
-          xml[xmlns].status STATUS_ACTIVE
+          xml[xmlns].status status
         end
       end
     end
