@@ -4,10 +4,42 @@ class Transfirst::RecurringProfile < Transfirst::Base
   DEBIT = 0
   AT_A_DATE = 51
 
-  attr_accessor :amount, :start_date, :description, :purchase_order_number,
-                :customer, :wallet, :api, :tf_id
+  FETCH_NODE = 'recurProfCrta'
+  FETCH_ID = 'id'
 
   response_key :id
+
+  attr_accessor :amount, :start_date, :description, :customer, :wallet, :api, :tf_id, :status, :next_charge_date
+
+  def initialize(*args)
+    if args.count == 2
+      api, attrs = *args
+
+      tf_recurring_profile_attrs = attrs[:recur_prof][:recur]
+
+      @tf_id = attrs[:recur_prof][:recur_prof_id]
+      @api = api
+
+      @amount = tf_recurring_profile_attrs[:amt].to_i
+      @start_date = tf_recurring_profile_attrs[:start_dt]
+      @next_charge_date = tf_recurring_profile_attrs[:next_proc_dt]
+
+      @description = tf_recurring_profile_attrs[:desc]
+
+      @status = tf_recurring_profile_attrs[:recur_prof_stat].to_i
+    else
+      super(*args)
+    end
+  end
+
+  def set_up_associations(customer, wallet)
+    @customer = customer
+    @wallet = wallet
+  end
+
+  def active?
+    @status == STATUS_ACTIVE
+  end
 
   private
 

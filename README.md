@@ -47,7 +47,7 @@ c.register
 w = Transfirst::Wallet.new({
     customer: c,
     card_number: '4485896261017708',
-    expiry: '1601',
+    expiry: '0116',
     order_number: '42'
   })
 w.api = api
@@ -64,8 +64,6 @@ rp = Transfirst::RecurringProfile.new({
 rp.api = api
 rp.register
 ```
-
-
 
 ## Contributing
 

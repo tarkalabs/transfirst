@@ -14,6 +14,7 @@ RSpec.describe Transfirst::Customer do
       email: "test@mail.com",
     })
   }
+
   describe "#xml_for_action" do
     context "registration" do
       it "serializes the customer as a xml object" do
@@ -22,6 +23,7 @@ RSpec.describe Transfirst::Customer do
         expect(actual_xml).to be_equivalent_to(Nokogiri::XML(expected_xml))
       end
     end
+
     context "update" do
       it "serializes the customer as a xml object" do
         expected_xml = File.read('spec/fixtures/customer_request_update.xml')

@@ -2,10 +2,41 @@ class Transfirst::Customer < Transfirst::Base
 
   BUSINESS_PHONE = 3
   RECURRING_PAYMENT = 1
+
+  FETCH_NODE = 'custCrta'
+  FETCH_ID = 'id'
+
   response_key :cust_id
+
   attr_accessor :full_name, :phone_number, :address_line1, :address_line2,
-                :city, :state, :zip_code, :country, :email, :tf_id
-  attr_accessor :api
+                :city, :state, :zip_code, :country, :email, :tf_id, :api, :status
+
+  def initialize(*args)
+    if args.count == 2
+      api, attrs = *args
+      tf_customer_attrs = attrs[:cust][:contact]
+
+      @tf_id = tf_customer_attrs[:id]
+      @api = api
+
+      @full_name = tf_customer_attrs[:full_name]
+      @email = tf_customer_attrs[:email]
+
+      @address_line1 = tf_customer_attrs[:addr_ln1]
+      @address_line2 = tf_customer_attrs[:addr_ln2]
+      @city = tf_customer_attrs[:city]
+      @state = tf_customer_attrs[:state]
+      @zip_code = tf_customer_attrs[:zip_code].to_i
+
+      @status = tf_customer_attrs[:stat].to_i
+    else
+      super(*args)
+    end
+  end
+
+  def active?
+    @status == STATUS_ACTIVE
+  end
 
   private
   def xml_for_action(action, status = STATUS_ACTIVE)

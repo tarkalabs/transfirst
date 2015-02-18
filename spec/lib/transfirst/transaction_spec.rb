@@ -20,7 +20,7 @@ RSpec.describe Transfirst::Transaction do
           customer: customer,
           card_number: "411111******1111",
           cvv: 123,
-          expiry: '1612',
+          expiry: '1216',
           order_number: 'WalletCustRefID'
         }),
         amount: 4200

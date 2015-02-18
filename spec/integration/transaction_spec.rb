@@ -13,18 +13,21 @@ describe "Transaction integration test", type: 'integration' do
       country: "US",
       email: Faker::Internet.email
     })
+
     @wallet = Transfirst::Wallet.new({
       customer: @customer,
       card_number: VALID_CARDS.sample,
       cvv: 123,
-      expiry: Faker::Date.forward(1000).strftime("%y%m"),
+      expiry: Faker::Date.forward(1000).strftime("%m%y"),
       order_number: Faker::Company.ein
-    });
+    })
+
     @api = Transfirst::API.new(API_CREDENTIALS)
   end
+
   describe "Transaction Report", type: "slow" do
     it "should post a successful transaction" do
-      @transaction = Transfirst::Transaction.new({customer: @customer,wallet: @wallet, amount: 81})
+      @transaction = Transfirst::Transaction.new({customer: @customer, wallet: @wallet, amount: 81})
       @transaction.api = @api
       @transaction.perform
       transaction_ids=[]
@@ -39,6 +42,7 @@ describe "Transaction integration test", type: 'integration' do
       expect(transaction_ids).to include(@transaction.transaction_id.to_i)
     end
   end
+
   describe "recurring profile" do
     before do
       @customer.api = @api
@@ -46,14 +50,16 @@ describe "Transaction integration test", type: 'integration' do
       @customer.register
       @wallet.register
     end
+
     it "should create a transaction" do
-      transaction = Transfirst::Transaction.new({customer: @customer,wallet: @wallet, amount: 50})
+      transaction = Transfirst::Transaction.new({customer: @customer, wallet: @wallet, amount: 50})
       transaction.api = @api
       transaction.perform
       expect(transaction.transaction_id).to be
       expect(transaction.transaction_meta).to be
       expect(transaction.status).to eq(:success)
     end
+
     it "should create a recurring profile" do
       rp = Transfirst::RecurringProfile.new({
         amount: 699,
@@ -62,7 +68,8 @@ describe "Transaction integration test", type: 'integration' do
         customer: @customer,
         wallet: @wallet
       })
-      rp.api=@api
+
+      rp.api = @api
       rp.register
       expect(rp.tf_id).to be
     end

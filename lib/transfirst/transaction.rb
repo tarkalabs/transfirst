@@ -52,7 +52,7 @@ class Transfirst::Transaction
       xml[xmlns].card({"xmlns:#{xmlns}"=>xsd_path}) do
         xml[xmlns].pan wallet.card_number
         xml[xmlns].sec wallet.cvv if wallet.cvv
-        xml[xmlns].xprDt wallet.expiry
+        xml[xmlns].xprDt Transfirst::Wallet.format_expiry(wallet.expiry)
       end
     end
   end
