@@ -57,7 +57,6 @@ rp = Transfirst::RecurringProfile.new({
   amount: 1000,
   start_date: DateTime.now,
   description: "Bronze Plan",
-  purchase_order_number: "1341342342",
   customer: c,
   wallet: w
 })
