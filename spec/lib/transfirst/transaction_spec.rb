@@ -21,15 +21,16 @@ RSpec.describe Transfirst::Transaction do
           card_number: "411111******1111",
           cvv: 123,
           expiry: '1216',
-          order_number: 'WalletCustRefID'
+          order_number: 'WalletCustRefID',
+          tf_id: 1234567890
         }),
-        amount: 4200
+        amount: 4200,
       })
     }
   describe "#perform" do
 
     it "should make an api request for transaction with details" do
-      expected_xmls = %w(tran_code card contact req_amt ind_code).map do |fname|
+      expected_xmls = %w(tran_code req_amt ind_code recur_man).map do |fname|
         File.read("spec/fixtures/transaction_#{fname}_request.xml")
       end
 
@@ -40,8 +41,7 @@ RSpec.describe Transfirst::Transaction do
                                                  be_equivalent_to(expected_xmls[0]),
                                                  be_equivalent_to(expected_xmls[1]),
                                                  be_equivalent_to(expected_xmls[2]),
-                                                 be_equivalent_to(expected_xmls[3]),
-                                                 be_equivalent_to(expected_xmls[4]))
+                                                 be_equivalent_to(expected_xmls[3]))
                                            .and_return({send_tran_response: {rsp_code: "00", tran_data: {tran_nr: '111111'}}})
       subject.perform
       expect(subject.transaction_id).to eq('111111')

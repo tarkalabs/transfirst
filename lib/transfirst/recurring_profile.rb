@@ -50,7 +50,7 @@ class Transfirst::RecurringProfile < Transfirst::Base
       xml[xmlns].recurProf({"xmlns:#{xmlns}"=>xsd_path}) do
 
         if action == UPDATE_ENTITY
-          xml[xmlns].id self.tf_id
+          xml[xmlns].recurProfId self.tf_id
         end
 
         xml[xmlns].type action

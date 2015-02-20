@@ -1,5 +1,0 @@
-<v1:card xmlns:v1="http://postilion/realtime/merchantframework/xsd/v1/">
-  <v1:pan>411111******1111</v1:pan>
-  <v1:sec>123</v1:sec>
-  <v1:xprDt>1612</v1:xprDt>
-</v1:card>

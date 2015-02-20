@@ -1,0 +1,4 @@
+<v1:recurMan xmlns:v1="http://postilion/realtime/merchantframework/xsd/v1/">
+  <v1:id>1234567890</v1:id>
+  <v1:sec>123</v1:sec>
+</v1:recurMan>

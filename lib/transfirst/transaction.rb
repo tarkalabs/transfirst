@@ -28,7 +28,7 @@ class Transfirst::Transaction
   private
 
   def xml_for_transaction
-    [tran_code, card, contact, req_amt, ind_code].map do |n|
+    [tran_code, req_amt, ind_code, recur_man].map do |n|
       n.to_xml :save_with => Nokogiri::XML::Node::SaveOptions::NO_DECLARATION
     end
   end
@@ -47,37 +47,6 @@ class Transfirst::Transaction
     end
   end
 
-  def card
-    Nokogiri::XML::Builder.new do |xml|
-      xml[xmlns].card({"xmlns:#{xmlns}"=>xsd_path}) do
-        xml[xmlns].pan wallet.card_number
-        xml[xmlns].sec wallet.cvv if wallet.cvv
-        xml[xmlns].xprDt Transfirst::Wallet.format_expiry(wallet.expiry)
-      end
-    end
-  end
-
-  def contact
-    Nokogiri::XML::Builder.new do |xml|
-      xml[xmlns].contact({"xmlns:#{xmlns}"=>xsd_path}) do
-        xml[xmlns].fullName customer.full_name
-        if customer.phone_number
-          xml[xmlns].phone do
-            xml[xmlns].type Transfirst::Customer::BUSINESS_PHONE
-            xml[xmlns].nr customer.phone_number
-          end
-        end
-        xml[xmlns].addrLn1 customer.address_line1
-        xml[xmlns].addrLn2 customer.address_line2
-        xml[xmlns].city customer.city
-        xml[xmlns].state customer.state
-        xml[xmlns].zipCode customer.zip_code
-        xml[xmlns].ctry customer.country
-        xml[xmlns].email customer.email
-      end
-    end
-  end
-
   def req_amt
     Nokogiri::XML::Builder.new do |xml|
       xml[xmlns].reqAmt({"xmlns:#{xmlns}"=>xsd_path}, formatted_amount)
@@ -87,6 +56,18 @@ class Transfirst::Transaction
   def ind_code
     Nokogiri::XML::Builder.new do |xml|
       xml[xmlns].indCode({"xmlns:#{xmlns}"=>xsd_path}, ECOMMERCE)
+    end
+  end
+
+  def recur_man
+    Nokogiri::XML::Builder.new do |xml|
+      xml[xmlns].recurMan({"xmlns:#{xmlns}"=>xsd_path}) do |wallet_xml|
+        wallet_xml[xmlns].id wallet.tf_id
+
+        if wallet.cvv
+          wallet_xml[xmlns].sec wallet.cvv
+        end
+      end
     end
   end
 

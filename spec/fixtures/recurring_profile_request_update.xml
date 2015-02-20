@@ -1,5 +1,5 @@
 <v1:recurProf xmlns:v1="http://postilion/realtime/merchantframework/xsd/v1/">
-    <v1:id>1234</v1:id>
+    <v1:recurProfId>1234</v1:recurProfId>
     <v1:type>1</v1:type>
     <v1:recur>
         <v1:recurProfStat>1</v1:recurProfStat>

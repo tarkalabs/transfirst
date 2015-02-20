@@ -14,6 +14,7 @@ class Transfirst::API
 
   def make_request(opname, method, *to_wrap)
     body = build_request(method, *to_wrap)
+
     begin
       response = soap_client.call(opname, xml: body, soap_action: nil)
       response.body

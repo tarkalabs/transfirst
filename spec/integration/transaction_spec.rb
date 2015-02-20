@@ -2,6 +2,8 @@ require 'integration_helper'
 
 describe "Transaction integration test", type: 'integration' do
   before do
+    @api = Transfirst::API.new(API_CREDENTIALS)
+
     @customer = Transfirst::Customer.new({
       full_name: Faker::Name.name,
       phone_number: Faker::PhoneNumber.cell_phone,
@@ -11,18 +13,22 @@ describe "Transaction integration test", type: 'integration' do
       state: Faker::Address.state_abbr,
       zip_code: Faker::Address.zip[0..4], #no zip ranges
       country: "US",
-      email: Faker::Internet.email
+      email: Faker::Internet.email,
+      api: @api
     })
+
+    @customer.register
 
     @wallet = Transfirst::Wallet.new({
       customer: @customer,
       card_number: VALID_CARDS.sample,
       cvv: 123,
       expiry: Faker::Date.forward(1000).strftime("%m%y"),
-      order_number: Faker::Company.ein
+      order_number: Faker::Company.ein,
+      api: @api
     })
 
-    @api = Transfirst::API.new(API_CREDENTIALS)
+    @wallet.register
   end
 
   describe "Transaction Report", type: "slow" do
@@ -44,13 +50,6 @@ describe "Transaction integration test", type: 'integration' do
   end
 
   describe "recurring profile" do
-    before do
-      @customer.api = @api
-      @wallet.api = @api
-      @customer.register
-      @wallet.register
-    end
-
     it "should create a transaction" do
       transaction = Transfirst::Transaction.new({customer: @customer, wallet: @wallet, amount: 50})
       transaction.api = @api
