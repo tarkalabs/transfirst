@@ -44,7 +44,6 @@ class Transfirst::Reports::TransactionDetail < Transfirst::Reports::Base
       return records if records.is_a?(Array)
       [records] if records.is_a?(Hash)
     else
-      puts result.inspect
       raise "Unable to read response"
     end
   end

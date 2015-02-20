@@ -18,10 +18,6 @@ class Transfirst::API
       response = soap_client.call(opname, xml: body, soap_action: nil)
       response.body
     rescue Savon::SOAPFault => e
-      puts "===========" * 10
-      puts body
-      puts "===========" * 10
-
       raise Transfirst::TransfirstError.new(e)
     end
   end
