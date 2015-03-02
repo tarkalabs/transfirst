@@ -15,7 +15,13 @@ class Transfirst::RecurringProfile < Transfirst::Base
     if args.count == 2
       api, attrs = *args
 
-      tf_recurring_profile_attrs = attrs[:recur_prof][:recur]
+      tf_recurring_profiles_attrs = attrs[:recur_prof]
+
+      if tf_recurring_profiles_attrs.kind_of?(Array)
+        tf_recurring_profile_attrs = tf_recurring_profiles_attrs.first[:recur]
+      else
+        tf_recurring_profile_attrs = tf_recurring_profiles_attrs[:recur]
+      end
 
       @tf_id = attrs[:recur_prof][:recur_prof_id]
       @api = api
