@@ -18,12 +18,12 @@ class Transfirst::RecurringProfile < Transfirst::Base
       tf_recurring_profiles_attrs = attrs[:recur_prof]
 
       if tf_recurring_profiles_attrs.kind_of?(Array)
-        tf_recurring_profile_attrs = tf_recurring_profiles_attrs.first[:recur]
-      else
-        tf_recurring_profile_attrs = tf_recurring_profiles_attrs[:recur]
+        tf_recurring_profiles_attrs = tf_recurring_profiles_attrs.first
       end
 
-      @tf_id = attrs[:recur_prof][:recur_prof_id]
+      tf_recurring_profile_attrs = tf_recurring_profiles_attrs[:recur]
+
+      @tf_id = tf_recurring_profiles_attrs[:recur_prof_id]
       @api = api
 
       @amount = tf_recurring_profile_attrs[:amt].to_i
