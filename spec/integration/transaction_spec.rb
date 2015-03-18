@@ -39,7 +39,7 @@ describe "Transaction integration test", type: 'integration' do
       transaction_ids=[]
       3.times do
         puts "waiting for transaction to appear in reports ..."
-        sleep 30
+        sleep 60
         @td_report=Transfirst::Reports::TransactionDetail.new(API_CREDENTIALS)
         results=@td_report.get_transactions(2.days.ago,DateTime.now)
         transaction_ids = results.map {|r| r[:tran_nr].to_i}
