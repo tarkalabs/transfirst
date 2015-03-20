@@ -30,4 +30,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "savon", ">= 2.7.2"
   spec.add_dependency "nokogiri", ">= 1.4"
   spec.add_dependency "activemodel", ">= 4.0"
+  spec.add_dependency "httpclient", ">= 2.6.0.1"
 end
